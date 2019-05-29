@@ -1,0 +1,9 @@
+App\Entity\Taxonomy:
+    taxonomy_{1..10}:
+        name: <text(5)>
+App\Entity\Product:
+    product_{1..10}:
+        name: <name()>
+        description: <text()>
+        price: <numberBetween(0, 5)>
+        taxonomy: '@taxonomy_*'

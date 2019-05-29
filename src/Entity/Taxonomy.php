@@ -28,13 +28,18 @@ class Taxonomy
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="taxonomy")
+     * @ORM\OneToMany(targetEntity="App\Entity\Product", mappedBy="taxonomy", cascade={"persist", "remove"})
      */
     private $products;
 
     public function __construct()
     {
         $this->products = new ArrayCollection();
+    }
+
+    public function __toString()
+    {
+        return $this->name;
     }
 
     public function getId(): ?int

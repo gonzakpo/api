@@ -2,13 +2,14 @@
 
 namespace App\Tests;
 
+use App\Entity\Product;
 use App\Entity\Taxonomy;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\HttpFoundation\Response;
 
-class ApiTest extends WebTestCase
+class ProductApiTest extends WebTestCase
 {
     use RefreshDatabaseTrait;
 
@@ -16,14 +17,15 @@ class ApiTest extends WebTestCase
     protected $client;
 
     /** @var integer */
-    protected $idTaxonomy = 3;
+    protected $idProduct = 3;
+    protected $idTaxonomy = 5;
 
     /**
-     * Retrieves the taxonomy list.
+     * Retrieves the product list.
      */
-    public function testRetrieveTheTaxonomyList(): void
+    public function testRetrieveTheProductList(): void
     {
-        $response = $this->request('GET', '/api/taxonomies');
+        $response = $this->request('GET', '/api/products');
         $json = json_decode($response->getContent(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
@@ -42,66 +44,78 @@ class ApiTest extends WebTestCase
     public function testThrowErrorsWhenDataAreInvalid(): void
     {
         $data = [
-            'name' => ''
+            'name' => '',
+            'description' => '',
+            'price' => '',
         ];
 
-        $response = $this->request('POST', '/api/taxonomies', $data);
+        $response = $this->request('POST', '/api/products', $data);
         $json = json_decode($response->getContent(), true);
 
         $this->assertEquals(400, $response->getStatusCode());
         $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
 
         $this->assertArrayHasKey('violations', $json);
-        $this->assertCount(1, $json['violations']);
+        $this->assertCount(3, $json['violations']);
 
         $this->assertArrayHasKey('propertyPath', $json['violations'][0]);
         $this->assertEquals('name', $json['violations'][0]['propertyPath']);
+
+        $this->assertArrayHasKey('propertyPath', $json['violations'][1]);
+        $this->assertEquals('description', $json['violations'][1]['propertyPath']);
+
+        $this->assertArrayHasKey('propertyPath', $json['violations'][2]);
+        $this->assertEquals('price', $json['violations'][2]['propertyPath']);
     }
 
     /**
-     * Creates a taxonomy.
+     * Creates a product.
      */
-    public function testCreateATaxonomy(): void
+    public function testCreateAProduct(): void
     {
+        $taxonomy = $this->findOneIriBy(Taxonomy::class, ['id' => $this->idTaxonomy]);
         $data = [
-            'name' => 'Manu Ginobili',
+            'name' => 'Product By Manu Ginobili',
+            'description' => 'Product By Manu Ginobili',
+            'price' => '200.25',
+            'taxonomy' => $taxonomy,
         ];
 
-        $response = $this->request('POST', '/api/taxonomies', $data);
+        $response = $this->request('POST', '/api/products', $data);
         $json = json_decode($response->getContent(), true);
 
         $this->assertEquals(201, $response->getStatusCode());
         $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
 
         $this->assertArrayHasKey('name', $json);
-        $this->assertEquals('Manu Ginobili', $json['name']);
+        $this->assertEquals('Product By Manu Ginobili', $json['name']);
     }
 
     /**
-     * Updates a taxonomy.
+     * Updates a product.
      */
-    public function testUpdateATaxonomy(): void
+    public function testUpdateAProduct(): void
     {
         $data = [
-            'name' => 'Pepe Sanchez',
+            'name' => 'Product By Pepe Sanchez',
         ];
 
-        $response = $this->request('PUT', $this->findOneIriBy(Taxonomy::class, ['id' => $this->idTaxonomy]), $data);
+        $response = $this->request('PUT', $this->findOneIriBy(Product::class, ['id' => $this->idProduct]), $data);
         $json = json_decode($response->getContent(), true);
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
 
         $this->assertArrayHasKey('name', $json);
-        $this->assertEquals('Pepe Sanchez', $json['name']);
+        $this->assertEquals('Product By Pepe Sanchez', $json['name']);
     }
 
     /**
-     * Deletes a taxonomy.
+     * Deletes a product.
      */
-    public function testDeleteATaxonomy(): void
+    public function testDeleteAProduct(): void
     {
-        $response = $this->request('DELETE', $this->findOneIriBy(Taxonomy::class, ['id' => $this->idTaxonomy]));
+        $response = $this->request('DELETE', $this->findOneIriBy(Product::class, ['id' => $this->idProduct]));
 
         $this->assertEquals(204, $response->getStatusCode());
 
@@ -123,8 +137,6 @@ class ApiTest extends WebTestCase
 
     protected function setUp()
     {
-        parent::setUp();
-
         $this->client = static::createClient();
     }
 

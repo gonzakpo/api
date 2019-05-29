@@ -1,3 +1,0 @@
-App\Entity\Taxonomy:
-    taxonomy_{1..10}:
-        name: <text(5)>
