@@ -3,6 +3,9 @@
 namespace App\Entity;
 
 use ApiPlatform\Core\Annotation\ApiResource;
+use ApiPlatform\Core\Annotation\ApiFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
+use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\File;
@@ -10,6 +13,11 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource()
+ * @ApiFilter(SearchFilter::class, properties={
+ *  "id": "exact", "taxonomy": "exact", 
+ *  "name": "partial", "description": "partial"
+ * })
+ * @ApiFilter(RangeFilter::class, properties={"price"})
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
  * @Vich\Uploadable
  */
@@ -35,10 +43,20 @@ class Product
     private $description;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=0)
+     * @ORM\Column(type="decimal", precision=10, scale=2)
      * @Assert\NotBlank
      */
     private $price;
+
+    /**
+     * @ORM\Column(type="decimal", precision=10, scale=2)
+     */
+    private $priceTax;
+
+    /**
+     * @ORM\Column(type="decimal", precision=5, scale=2, options={"default":21})
+     */
+    private $tax = 21;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Taxonomy", inversedBy="products")
@@ -163,6 +181,35 @@ class Product
     public function setPrice($price): self
     {
         $this->price = $price;
+        $this->setPriceTax($price);
+
+        return $this;
+    }
+
+    public function getPriceTax()
+    {
+        return $this->priceTax;
+    }
+
+    public function setPriceTax($priceTax): self
+    {
+        $this->priceTax = 0;
+
+        if ($priceTax > 0 && $this->tax > 0) {
+            $this->priceTax = $priceTax + ($priceTax / 100 * $this->tax);
+        }
+
+        return $this;
+    }
+
+    public function getTax()
+    {
+        return $this->tax;
+    }
+
+    public function setTax($tax): self
+    {
+        $this->tax = $tax;
 
         return $this;
     }
