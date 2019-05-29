@@ -19,6 +19,8 @@ class ProductApiTest extends WebTestCase
     /** @var integer */
     protected $idProduct = 3;
     protected $idTaxonomy = 5;
+    protected $betweenPrice = '2.25..3.25';
+    protected $partialDescription = 'dolores';
 
     /**
      * Retrieves the product list.
@@ -36,6 +38,60 @@ class ProductApiTest extends WebTestCase
 
         $this->assertArrayHasKey('hydra:member', $json);
         $this->assertCount(10, $json['hydra:member']);
+    }
+
+    /**
+     * Retrieves the product list by taxonomy.
+     */
+    public function testRetrieveTheProductListByTaxonomy(): void
+    {
+        $response = $this->request('GET', '/api/products?taxonomy='.$this->idTaxonomy);
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
+
+        $this->assertArrayHasKey('hydra:totalItems', $json);
+        $this->assertEquals(1, $json['hydra:totalItems']);
+
+        $this->assertArrayHasKey('hydra:member', $json);
+        $this->assertCount(1, $json['hydra:member']);
+    }
+
+    /**
+     * Retrieves the product list by price.
+     */
+    public function testRetrieveTheProductListByPrice(): void
+    {
+        $response = $this->request('GET', '/api/products?price[between]='.$this->betweenPrice);
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
+
+        $this->assertArrayHasKey('hydra:totalItems', $json);
+        $this->assertEquals(1, $json['hydra:totalItems']);
+
+        $this->assertArrayHasKey('hydra:member', $json);
+        $this->assertCount(1, $json['hydra:member']);
+    }
+
+    /**
+     * Retrieves the product list by description.
+     */
+    public function testRetrieveTheProductListByDescription(): void
+    {
+        $response = $this->request('GET', '/api/products?description='.$this->partialDescription);
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
+
+        $this->assertArrayHasKey('hydra:totalItems', $json);
+        $this->assertEquals(3, $json['hydra:totalItems']);
+
+        $this->assertArrayHasKey('hydra:member', $json);
+        $this->assertCount(3, $json['hydra:member']);
     }
 
     /**
