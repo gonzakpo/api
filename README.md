@@ -1,21 +1,24 @@
 Symfony 4 API Platform
 ======================
 The project is example of as implement API Platform in Symfony and use Testing.
-Initial commands
-----------------
+
+
+## Initial commands
 
 ### Database
 
-.. code-block:: bash
-    php bin/console doctrine:database:drop --force
-    php bin/console doctrine:database:create
-    php bin/console doctrine:schema:create
-    php bin/console hautelook:fixtures:load
+```cli
+$ php bin/console doctrine:database:drop --force
+$ php bin/console doctrine:database:create
+$ php bin/console doctrine:schema:create
+$ php bin/console hautelook:fixtures:load
+```
 
 ### Test
 
-.. code-block:: bash
-    php bin/phpunit
+```cli
+$ php bin/phpunit
+```
 
 ### Use
 - [Symfony](https://symfony.com)
