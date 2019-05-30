@@ -5,17 +5,16 @@ Initial commands
 ----------------
 Database
 ~~~~~~~~
-```cli
-php bin/console doctrine:database:drop --force
-php bin/console doctrine:database:create
-php bin/console doctrine:schema:create
-php bin/console hautelook:fixtures:load
-```
+.. code-block:: bash
+    php bin/console doctrine:database:drop --force
+    php bin/console doctrine:database:create
+    php bin/console doctrine:schema:create
+    php bin/console hautelook:fixtures:load
+
 Test
 ~~~~
-```cli
-php bin/phpunit
-```
+.. code-block:: bash
+    php bin/phpunit
 
 ## Use
 - [Symfony](https://symfony.com)
