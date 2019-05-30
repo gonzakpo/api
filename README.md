@@ -20,6 +20,15 @@ $ php bin/console hautelook:fixtures:load
 $ php bin/phpunit
 ```
 
+### Server start
+```cli
+$ symfony server:start --no-tls
+```
+
+### Url Admin
+- [Easy Admin](http://127.0.0.1:8000/admin)
+- [API Platform](http://127.0.0.1:8000/api)
+
 ### Use
 - [Symfony](https://symfony.com)
 - [API Platform](https://api-platform.com)
