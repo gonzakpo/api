@@ -17,7 +17,7 @@ class ProductApiTest extends WebTestCase
     /** @var Client */
     protected $client;
 
-    /** @var integer */
+    /** @var int */
     protected $idProduct = 3;
     protected $idTaxonomy = 5;
     protected $idMediaObject = 1;
@@ -207,7 +207,7 @@ class ProductApiTest extends WebTestCase
     {
         $server = ['CONTENT_TYPE' => 'application/ld+json', 'HTTP_ACCEPT' => 'application/ld+json'];
         foreach ($headers as $key => $value) {
-            if (strtolower($key) === 'content-type') {
+            if ('content-type' === strtolower($key)) {
                 $server['CONTENT_TYPE'] = $value;
 
                 continue;

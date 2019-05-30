@@ -93,7 +93,7 @@ class MediaObjectApiTest extends WebTestCase
     {
         $server = ['CONTENT_TYPE' => 'application/ld+json', 'HTTP_ACCEPT' => 'application/ld+json'];
         foreach ($headers as $key => $value) {
-            if (strtolower($key) === 'content-type') {
+            if ('content-type' === strtolower($key)) {
                 $server['CONTENT_TYPE'] = $value;
 
                 continue;

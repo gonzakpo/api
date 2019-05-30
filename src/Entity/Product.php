@@ -9,13 +9,12 @@ use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\SearchFilter;
 use ApiPlatform\Core\Bridge\Doctrine\Orm\Filter\RangeFilter;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
  * @ApiResource()
  * @ApiFilter(SearchFilter::class, properties={
- *  "id": "exact", "taxonomy": "exact", 
+ *  "id": "exact", "taxonomy": "exact",
  *  "name": "partial", "description": "partial"
  * })
  * @ApiFilter(RangeFilter::class, properties={"price"})

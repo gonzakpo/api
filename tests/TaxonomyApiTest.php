@@ -15,7 +15,7 @@ class TaxonomyApiTest extends WebTestCase
     /** @var Client */
     protected $client;
 
-    /** @var integer */
+    /** @var int */
     protected $idTaxonomy = 3;
 
     /**
@@ -42,7 +42,7 @@ class TaxonomyApiTest extends WebTestCase
     public function testThrowErrorsWhenDataAreInvalid(): void
     {
         $data = [
-            'name' => ''
+            'name' => '',
         ];
 
         $response = $this->request('POST', '/api/taxonomies', $data);
@@ -133,7 +133,7 @@ class TaxonomyApiTest extends WebTestCase
     {
         $server = ['CONTENT_TYPE' => 'application/ld+json', 'HTTP_ACCEPT' => 'application/ld+json'];
         foreach ($headers as $key => $value) {
-            if (strtolower($key) === 'content-type') {
+            if ('content-type' === strtolower($key)) {
                 $server['CONTENT_TYPE'] = $value;
 
                 continue;
