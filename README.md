@@ -25,7 +25,7 @@ $ php bin/phpunit
 $ symfony server:start --no-tls
 ```
 
-### Url Admin
+### Url
 - [Easy Admin](http://127.0.0.1:8000/admin)
 - [API Platform](http://127.0.0.1:8000/api)
 
