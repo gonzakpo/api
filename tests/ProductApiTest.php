@@ -4,6 +4,7 @@ namespace App\Tests;
 
 use App\Entity\Product;
 use App\Entity\Taxonomy;
+use App\Entity\MediaObject;
 use Hautelook\AliceBundle\PhpUnit\RefreshDatabaseTrait;
 use Symfony\Bundle\FrameworkBundle\Client;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
@@ -19,6 +20,7 @@ class ProductApiTest extends WebTestCase
     /** @var integer */
     protected $idProduct = 3;
     protected $idTaxonomy = 5;
+    protected $idMediaObject = 1;
     protected $betweenPrice = '2.25..3.25';
     protected $partialDescription = 'dolores';
 
@@ -130,11 +132,13 @@ class ProductApiTest extends WebTestCase
     public function testCreateAProduct(): void
     {
         $taxonomy = $this->findOneIriBy(Taxonomy::class, ['id' => $this->idTaxonomy]);
+        $mediaObject = $this->findOneIriBy(MediaObject::class, ['id' => $this->idMediaObject]);
         $data = [
             'name' => 'Product By Manu Ginobili',
             'description' => 'Product By Manu Ginobili',
             'price' => '200.25',
             'taxonomy' => $taxonomy,
+            'image' => $mediaObject,
         ];
 
         $response = $this->request('POST', '/api/products', $data);

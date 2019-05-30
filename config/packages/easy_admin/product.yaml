@@ -11,7 +11,7 @@ easy_admin:
                     - priceTax
                     - tax
                     - taxonomy
-                    - { property: 'imageName', type: 'image', base_path: '%app.path.product_image%' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.media_object%' }
             show:
                 fields:
                     - id
@@ -21,7 +21,7 @@ easy_admin:
                     - priceTax
                     - tax
                     - taxonomy
-                    - { property: 'imageName', type: 'image', base_path: '%app.path.product_image%' }
+                    - { property: 'image', type: 'image', base_path: '%app.path.media_object%' }
             form:
                 fields:
                     - name
@@ -29,4 +29,4 @@ easy_admin:
                     - price
                     - tax
                     - taxonomy
-                    - { property: 'imageFile', type: 'vich_image' }
+                    - image

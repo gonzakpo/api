@@ -14,6 +14,13 @@
         "symfony/yaml": "4.2.*",
         "vich/uploader-bundle": "^1.9"
     },
+    "require-dev": {
+        "hautelook/alice-bundle": "^2.5",
+        "symfony/maker-bundle": "^1.11",
+        "symfony/phpunit-bridge": "4.2.*",
+        "symfony/profiler-pack": "^1.0",
+        "symfony/test-pack": "^1.0"
+    },
     "config": {
         "preferred-install": {
             "*": "dist"
@@ -58,12 +65,5 @@
             "allow-contrib": false,
             "require": "4.2.*"
         }
-    },
-    "require-dev": {
-        "hautelook/alice-bundle": "^2.5",
-        "symfony/maker-bundle": "^1.11",
-        "symfony/phpunit-bridge": "4.2.*",
-        "symfony/profiler-pack": "^1.0",
-        "symfony/test-pack": "^1.0"
     }
 }
