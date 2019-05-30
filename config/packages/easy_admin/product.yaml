@@ -1,0 +1,32 @@
+easy_admin:
+    entities:
+        Product:
+            class: App\Entity\Product
+            list:
+                fields:
+                    - id
+                    - name
+                    - description
+                    - price
+                    - priceTax
+                    - tax
+                    - taxonomy
+                    - { property: 'imageName', type: 'image', base_path: '%app.path.product_image%' }
+            show:
+                fields:
+                    - id
+                    - name
+                    - description
+                    - price
+                    - priceTax
+                    - tax
+                    - taxonomy
+                    - { property: 'imageName', type: 'image', base_path: '%app.path.product_image%' }
+            form:
+                fields:
+                    - name
+                    - description
+                    - price
+                    - tax
+                    - taxonomy
+                    - { property: 'imageFile', type: 'vich_image' }

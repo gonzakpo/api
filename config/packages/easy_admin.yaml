@@ -1,4 +1,2 @@
-easy_admin:
-    entities:
-        - App\Entity\Product
-        - App\Entity\Taxonomy
+imports:
+    - { resource: easy_admin/ }
