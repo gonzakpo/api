@@ -17,9 +17,6 @@ class MediaObjectApiTest extends WebTestCase
     /** @var Client */
     protected $client;
 
-    // /** @var integer */
-    // protected $idMediaObject = 3;
-
     /**
      * Retrieves the mediaObject list.
      */
@@ -32,24 +29,10 @@ class MediaObjectApiTest extends WebTestCase
         $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
 
         $this->assertArrayHasKey('hydra:totalItems', $json);
-        $this->assertEquals(0, $json['hydra:totalItems']);
+        $this->assertEquals(1, $json['hydra:totalItems']);
 
         $this->assertArrayHasKey('hydra:member', $json);
-        $this->assertCount(0, $json['hydra:member']);
-    }
-
-    /**
-     * Throws errors when data are invalid.
-     */
-    public function testThrowErrorsWhenDataAreInvalid(): void
-    {
-        $response = $this->requestFile('POST', '/api/media_objects');
-        $json = json_decode($response->getContent(), true);
-
-        $this->assertEquals(400, $response->getStatusCode());
-        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
-
-        $this->assertContains('"file" is required', $json);
+        $this->assertCount(1, $json['hydra:member']);
     }
 
     /**
