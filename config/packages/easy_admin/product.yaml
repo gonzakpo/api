@@ -11,7 +11,7 @@ easy_admin:
                     - priceTax
                     - tax
                     - taxonomy
-                    - { property: 'image', type: 'image', base_path: '%app.path.media_object%' }
+                    - { property: 'image', type: 'image' }
             show:
                 fields:
                     - id
@@ -21,7 +21,7 @@ easy_admin:
                     - priceTax
                     - tax
                     - taxonomy
-                    - { property: 'image', type: 'image', base_path: '%app.path.media_object%' }
+                    - { property: 'image', type: 'image' }
             form:
                 fields:
                     - name

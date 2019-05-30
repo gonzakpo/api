@@ -10,3 +10,4 @@ App\Entity\Product:
         description: <text()>
         price: <numberBetween(0, 5)>
         taxonomy: '@taxonomy_*'
+        image: '@mediaobject_0'

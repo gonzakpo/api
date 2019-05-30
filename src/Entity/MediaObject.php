@@ -77,6 +77,11 @@ class MediaObject
      */
     public $filePath;
 
+    public function __toString()
+    {
+        return $this->filePath;
+    }
+
     public function getId(): ?int
     {
         return $this->id;
