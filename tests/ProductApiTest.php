@@ -18,6 +18,7 @@ class ProductApiTest extends WebTestCase
     protected $client;
 
     /** @var int */
+    protected $page = 2;
     protected $idProduct = 3;
     protected $idTaxonomy = 5;
     protected $idMediaObject = 1;
@@ -39,7 +40,25 @@ class ProductApiTest extends WebTestCase
         $this->assertEquals(10, $json['hydra:totalItems']);
 
         $this->assertArrayHasKey('hydra:member', $json);
-        $this->assertCount(10, $json['hydra:member']);
+        $this->assertCount(5, $json['hydra:member']);
+    }
+
+    /**
+     * Retrieves the product list page 2.
+     */
+    public function testRetrieveTheProductListPage(): void
+    {
+        $response = $this->request('GET', '/api/products?page='.$this->page);
+        $json = json_decode($response->getContent(), true);
+
+        $this->assertEquals(200, $response->getStatusCode());
+        $this->assertEquals('application/ld+json; charset=utf-8', $response->headers->get('Content-Type'));
+
+        $this->assertArrayHasKey('hydra:totalItems', $json);
+        $this->assertEquals(10, $json['hydra:totalItems']);
+
+        $this->assertArrayHasKey('hydra:member', $json);
+        $this->assertCount(5, $json['hydra:member']);
     }
 
     /**

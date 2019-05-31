@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ApiResource()
+ * @ApiResource(attributes={"pagination_items_per_page"=5})
  * @ApiFilter(SearchFilter::class, properties={
  *  "id": "exact", "taxonomy": "exact",
  *  "name": "partial", "description": "partial"
