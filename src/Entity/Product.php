@@ -19,6 +19,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  * })
  * @ApiFilter(RangeFilter::class, properties={"price"})
  * @ORM\Entity(repositoryClass="App\Repository\ProductRepository")
+ * @ORM\HasLifecycleCallbacks()
  * @Vich\Uploadable
  */
 class Product
@@ -49,9 +50,9 @@ class Product
     private $price;
 
     /**
-     * @ORM\Column(type="decimal", precision=10, scale=2)
+     * @ORM\Column(type="decimal", precision=10, scale=2, options={"default":0})
      */
-    private $priceTax;
+    private $priceTax = 0;
 
     /**
      * @ORM\Column(type="decimal", precision=5, scale=2, options={"default":21})
@@ -76,6 +77,16 @@ class Product
     public function __toString()
     {
         return $this->name;
+    }
+
+    /**
+     * @ORM\PrePersist
+     */
+    public function setPriceTaxValue()
+    {
+        if ($this->price > 0 && $this->tax > 0) {
+            $this->priceTax = $this->price + ($this->price / 100 * $this->tax);
+        }
     }
 
     public function getId(): ?int
@@ -115,7 +126,6 @@ class Product
     public function setPrice($price): self
     {
         $this->price = $price;
-        $this->setPriceTax($price);
 
         return $this;
     }
@@ -127,11 +137,7 @@ class Product
 
     public function setPriceTax($priceTax): self
     {
-        $this->priceTax = 0;
-
-        if ($priceTax > 0 && $this->tax > 0) {
-            $this->priceTax = $priceTax + ($priceTax / 100 * $this->tax);
-        }
+        $this->priceTax = $priceTax;
 
         return $this;
     }
