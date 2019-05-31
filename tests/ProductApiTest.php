@@ -156,6 +156,7 @@ class ProductApiTest extends WebTestCase
             'name' => 'Product By Manu Ginobili',
             'description' => 'Product By Manu Ginobili',
             'price' => '200.25',
+            'tax' => '20',
             'taxonomy' => $taxonomy,
             'image' => $mediaObject,
         ];
@@ -168,6 +169,9 @@ class ProductApiTest extends WebTestCase
 
         $this->assertArrayHasKey('name', $json);
         $this->assertEquals('Product By Manu Ginobili', $json['name']);
+
+        $this->assertArrayHasKey('priceTax', $json);
+        $this->assertEquals('240.30', $json['priceTax']);
     }
 
     /**
